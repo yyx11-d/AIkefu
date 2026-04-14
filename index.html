@@ -1,0 +1,304 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI客服产品用户评论痛点报告（Tencent Cloud Intelligent Customer Service）</title>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: rgba(18, 26, 49, 0.8);
+      --panel-solid: #121a31;
+      --text: #eaf0ff;
+      --muted: #a8b3d9;
+      --line: #2a3564;
+      --primary: #6ea8fe;
+      --primary-2: #8b7bff;
+      --radius: 14px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font: 14px/1.6 "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(1200px 500px at 10% -10%, #2e3e84 0%, transparent 60%),
+        radial-gradient(1000px 500px at 90% -20%, #5f2f8a 0%, transparent 60%),
+        var(--bg);
+    }
+    a { color: #9fc1ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { width: min(1200px, 94vw); margin: 24px auto 48px; }
+    .hero, .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(6px);
+    }
+    .hero { padding: 26px; margin-bottom: 16px; }
+    h1 { margin: 0 0 8px; font-size: clamp(22px, 3.8vw, 34px); line-height: 1.25; letter-spacing: 0.3px; }
+    .subtitle { color: var(--muted); max-width: 920px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .chip { padding: 6px 10px; border-radius: 999px; border: 1px solid #32407a; color: #c8d2f5; background: #1a2550; font-size: 12px; white-space: nowrap; }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+    .span-12 { grid-column: span 12; }
+    .span-7 { grid-column: span 7; }
+    .span-5 { grid-column: span 5; }
+    .card { padding: 16px; }
+    h2 { margin: 4px 0 12px; font-size: 17px; }
+    .kpis { display: grid; grid-template-columns: repeat(4, minmax(160px, 1fr)); gap: 10px; }
+    .kpi { background: var(--panel-solid); border: 1px solid var(--line); border-radius: 12px; padding: 12px; min-height: 72px; }
+    .kpi .label { color: var(--muted); font-size: 12px; }
+    .kpi .value { margin-top: 6px; font-size: 18px; font-weight: 750; }
+    .chart { width: 100%; height: 340px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; overflow: hidden; border-radius: 12px; border: 1px solid var(--line); }
+    thead th { text-align: left; background: #1a2550; color: #dce5ff; padding: 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    tbody td { padding: 10px; border-bottom: 1px dashed #2f3d72; vertical-align: top; color: #e3e9ff; }
+    tbody tr:hover { background: #182349; }
+    .muted { color: var(--muted); }
+    .footer-note { color: var(--muted); font-size: 12px; margin-top: 8px; }
+    .quote { background: #10183a; border: 1px solid #28356a; border-radius: 12px; padding: 12px; margin: 10px 0; }
+    .quote .meta { display: flex; flex-wrap: wrap; gap: 8px; color: var(--muted); font-size: 12px; }
+    .quote .body { margin-top: 8px; white-space: pre-wrap; }
+    .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; border: 1px solid #32407a; background: #1a2550; color: #c8d2f5; }
+    @media (max-width: 980px) { .span-7, .span-5 { grid-column: span 12; } .kpis { grid-template-columns: repeat(2, 1fr); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>AI 客服产品用户评论痛点报告：Tencent Cloud Intelligent Customer Service</h1>
+      <div class="subtitle">
+        基于公开可访问的用户讨论/评论抓取与归类分析，输出可执行的核心痛点归类与优先级建议。
+        <span class="muted">（口径：本报告将 “用户评论” 定义为公开平台的真实用户讨论文本。）</span>
+      </div>
+      <div class="chips">
+        <span class="chip">生成时间（UTC）：2026-04-14T08:40:08.5734818+00:00</span>
+        <span class="chip">样本量：10 条评论</span>
+        <span class="chip">覆盖线程：1 个</span>
+        <span class="chip">产品：Tencent Cloud Intelligent Customer Service</span>
+      </div>
+      <div class="footer-note">数据来源（可复现）：<a href="https://cloud.tencent.com/developer/ask" target="_blank" rel="noreferrer">https://cloud.tencent.com/developer/ask</a></div>
+    </section>
+
+    <section class="card" style="margin-bottom:14px;">
+      <h2>概览 KPI</h2>
+      <div class="kpis">
+        <div class="kpi"><div class="label">痛点命中率</div><div class="value">90%</div></div>
+        <div class="kpi"><div class="label">Top 1 痛点</div><div class="value">kb_setup_ops</div></div>
+        <div class="kpi"><div class="label">Top 1 占比</div><div class="value">90%</div></div>
+        <div class="kpi"><div class="label">主题（按痛点）</div><div class="value">1</div></div>
+      </div>
+      <div class="footer-note">注：痛点归类为关键词匹配；主题为每类痛点的高频词概览（用于快速读懂讨论焦点）。</div>
+    </section>
+
+    <div class="grid">
+      <section class="card span-7">
+        <h2>痛点分布（关键词归类）</h2>
+        <div id="painChart" class="chart"></div>
+      </section>
+      <section class="card span-5">
+        <h2>主题规模（按痛点汇总）</h2>
+        <div id="topicChart" class="chart"></div>
+      </section>
+      <section class="card span-12">
+        <h2>TOP 痛点与建议动作</h2>
+        <table>
+          <thead><tr><th>痛点类别</th><th>出现次数</th><th>占比</th><th>建议动作（可落地）</th></tr></thead>
+          <tbody id="painTableBody"></tbody>
+        </table>
+      </section>
+      <section class="card span-12">
+        <h2>主题词（用于发现同义表达/新问题）</h2>
+        <table>
+          <thead><tr><th>主题</th><th>规模</th><th>关键词</th></tr></thead>
+          <tbody id="topicTableBody"></tbody>
+        </table>
+      </section>
+      <section class="card span-12">
+        <h2>代表性评论摘录（按痛点）</h2>
+        <div id="quotes"></div>
+        <div class="footer-note">引用均来自公开页面的公开文本。</div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const DATA = {
+    "topics":  {
+                   "sorted":  [
+                                  {
+                                      "topic_id":  0,
+                                      "size":  9,
+                                      "top_terms":  [
+                                                        "workbuddy",
+                                                        "error",
+                                                        "plan",
+                                                        "coding",
+                                                        "glm",
+                                                        "chatgpt",
+                                                        "server",
+                                                        "user"
+                                                    ]
+                                  }
+                              ]
+               },
+    "quotes":  [
+                   {
+                       "painpoint":  "kb_setup_ops",
+                       "body":  "workbuddy启动内存9Gb，32个进程？-腾讯云开发者社区-腾讯云 问题：WorkBuddy 启动时自动加载所有历史工作空间（30个），导致内存占用 9GB+期望：只加载当前打开的工作空间影响：16GB 内存机器几乎被占满，其他软件无法运行复现：打开 WorkBuddy → 观察进程数始终为 30+，内存 9GB+附加：已确认storage.json的backupWorkspaces和... storage,工作,进程,内存,WorkBuddy",
+                       "score":  null,
+                       "created_iso":  "2026-04-14T08:40:07.1231253+00:00",
+                       "permalink":  "https://cloud.tencent.com/developer/ask/2211251"
+                   },
+                   {
+                       "painpoint":  "kb_setup_ops",
+                       "body":  "又崩了，WorkBuddy不会是WorkBuddy写的吧？-腾讯云开发者社区-腾讯云 然后找不到bug在哪了 bug,WorkBuddy",
+                       "score":  null,
+                       "created_iso":  "2026-04-14T08:40:06.1127753+00:00",
+                       "permalink":  "https://cloud.tencent.com/developer/ask/2211234"
+                   }
+               ],
+    "kpis":  {
+                 "top_painpoint":  "kb_setup_ops",
+                 "top_painpoint_pct":  90,
+                 "n_topics":  1,
+                 "painpoint_hit_rate_pct":  90
+             },
+    "painpoints":  {
+                       "advice":  {
+                                      "observability_qa":  "Standardize metrics: auto-resolution rate, misunderstanding rate, handoff rate, citation hit-rate, and cost per conversation; slice by intent/channel/language.",
+                                      "pricing_cost":  "Make pricing explainable (resolution-\u003ecost drivers), simulate bills by traffic percentiles, and enforce budget guardrails + graceful degradation.",
+                                      "kb_setup_ops":  "Split sources into high-frequency short FAQs + long docs, build an update pipeline (versioning/rollback/expiry), and close the loop with coverage + hit-rate metrics.",
+                                      "other_unmatched":  "Expand taxonomy via sampling + labeling; promote frequent unmatched patterns into new painpoint dimensions.",
+                                      "handoff_workflow":  "Define handoff triggers (confidence/emotion/value/compliance). When escalating, attach context and evidence (intent + attempted steps + citations).",
+                                      "integration_governance":  "Clarify data boundaries (systems/fields), add audit logs for critical actions, and implement confirmations + idempotency for write operations.",
+                                      "localization_tone":  "Create brand tone templates + forbidden phrases. Evaluate per language, and use a more conservative tone/higher handoff rate for sensitive scenarios.",
+                                      "reliability_hallucination":  "Improve grounding (retrieve + cite), add conservative refusal/handoff for risky intents, and run offline replay evaluation + daily sampling QA."
+                                  },
+                       "sorted":  [
+                                      {
+                                          "label":  "kb_setup_ops",
+                                          "count":  9
+                                      }
+                                  ]
+                   },
+    "meta":  {
+                 "generated_at_utc":  "2026-04-14T08:40:08.5734818+00:00",
+                 "product":  "Tencent Cloud Intelligent Customer Service",
+                 "threads":  [
+                                 "https://cloud.tencent.com/developer/ask"
+                             ],
+                 "n_threads":  1,
+                 "n_comments":  10,
+                 "source_note":  "Tencent Cloud developer ask pages (public content)"
+             }
+};
+    const DISPLAY = {
+      pricing_cost: '定价/计费不可控',
+      reliability_hallucination: '效果不稳定/幻觉',
+      kb_setup_ops: '知识库/训练成本高',
+      handoff_workflow: '升级人工/工单流转差',
+      integration_governance: '集成/权限/治理问题',
+      localization_tone: '多语言/语气/品牌一致性',
+      observability_qa: '可观测性/质检困难',
+      other_unmatched: '其他/未命中'
+    };
+
+    const painPairs = DATA.painpoints.sorted.map(x => [DISPLAY[x.label] || x.label, x.count]);
+    const painLabels = painPairs.map(x => x[0]);
+    const painValues = painPairs.map(x => x[1]);
+
+    const painChart = echarts.init(document.getElementById('painChart'));
+    painChart.setOption({
+      backgroundColor: 'transparent',
+      tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+      grid: { left: 10, right: 16, top: 10, bottom: 10, containLabel: true },
+      xAxis: { type: 'value', axisLabel: { color: '#c2d0fa' }, splitLine: { lineStyle: { color: '#2a3564' } } },
+      yAxis: { type: 'category', data: painLabels, axisLabel: { color: '#c2d0fa' }, axisLine: { lineStyle: { color: '#3a4a82' } } },
+      series: [{
+        type: 'bar',
+        data: painValues,
+        barWidth: 18,
+        itemStyle: {
+          borderRadius: 8,
+          color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [
+            { offset: 0, color: '#8b7bff' },
+            { offset: 1, color: '#6ea8fe' }
+          ])
+        }
+      }]
+    });
+
+    const topicChart = echarts.init(document.getElementById('topicChart'));
+    const topicNames = DATA.topics.sorted.map(t => `Topic ${t.topic_id}`);
+    const topicSizes = DATA.topics.sorted.map(t => t.size);
+    topicChart.setOption({
+      backgroundColor: 'transparent',
+      tooltip: { trigger: 'item' },
+      series: [{
+        type: 'pie',
+        radius: ['40%', '72%'],
+        avoidLabelOverlap: true,
+        itemStyle: { borderColor: '#0b1020', borderWidth: 2 },
+        label: { color: '#dce5ff' },
+        labelLine: { lineStyle: { color: '#7082c7' } },
+        data: topicNames.map((n, i) => ({ name: n, value: topicSizes[i] }))
+      }]
+    });
+
+    const painBody = document.getElementById('painTableBody');
+    const total = DATA.meta.n_comments || 1;
+    const adviceMap = DATA.painpoints.advice || {};
+    DATA.painpoints.sorted.forEach(p => {
+      const tr = document.createElement('tr');
+      const pct = ((p.count / total) * 100).toFixed(1) + '%';
+      const name = DISPLAY[p.label] || p.label;
+      tr.innerHTML =
+        '<td><span class="pill">' + name + '</span></td>' +
+        '<td>' + p.count + '</td>' +
+        '<td>' + pct + '</td>' +
+        '<td class="muted">' + (adviceMap[p.label] || '—') + '</td>';
+      painBody.appendChild(tr);
+    });
+
+    const topicBody = document.getElementById('topicTableBody');
+    DATA.topics.sorted.forEach(t => {
+      const tr = document.createElement('tr');
+      const terms = (t.top_terms || []).map(x => '<span class="pill" style="margin-right:6px;">' + x + '</span>').join('');
+      tr.innerHTML =
+        '<td>Topic ' + t.topic_id + '</td>' +
+        '<td>' + t.size + '</td>' +
+        '<td>' + (terms || '<span class="muted">（无明显词项）</span>') + '</td>';
+      topicBody.appendChild(tr);
+    });
+
+    const quotes = document.getElementById('quotes');
+    (DATA.quotes || []).forEach(q => {
+      const el = document.createElement('div');
+      el.className = 'quote';
+      const name = DISPLAY[q.painpoint] || q.painpoint;
+      const link = q.permalink ? ('<a href="' + q.permalink + '" target="_blank" rel="noreferrer">原文</a>') : '';
+      const score = (q.score === null || q.score === undefined) ? '—' : q.score;
+      const created = q.created_iso || '';
+      el.innerHTML =
+        '<div class="meta">' +
+          '<span class="pill">' + name + '</span>' +
+          '<span>score: ' + score + '</span>' +
+          '<span>' + created + '</span>' +
+          link +
+        '</div>' +
+        '<div class="body">' + q.body + '</div>';
+      quotes.appendChild(el);
+    });
+
+    window.addEventListener('resize', () => { painChart.resize(); topicChart.resize(); });
+  </script>
+</body>
+</html>
+
+
